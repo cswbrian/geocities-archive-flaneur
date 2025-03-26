@@ -1,8 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>New Tab - Geocities Archive Flâneur</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #next-city {
+            background: linear-gradient(to bottom, #ffd700, #ffa500);
+            border: 3px outset #ffd700;
+            padding: 8px 16px;
+            font-family: "Comic Sans MS", cursive;
+            font-weight: bold;
+            color: #000080;
+            text-shadow: 1px 1px #fff;
+            cursor: pointer;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+            animation: rainbow 5s infinite;
+        }
+
+        #next-city:hover {
+            background: linear-gradient(to bottom, #ffa500, #ff8c00);
+            border-style: inset;
+        }
+
+        @keyframes rainbow {
+            0% { border-color: #ff0000; }
+            20% { border-color: #ffd700; }
+            40% { border-color: #00ff00; }
+            60% { border-color: #0000ff; }
+            80% { border-color: #ff00ff; }
+            100% { border-color: #ff0000; }
+        }
+
+        #info-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+        }
+
+        #page-info {
+            color: #fff;
+            font-family: "Comic Sans MS", cursive;
+            margin-bottom: 10px;
+            white-space: pre-line;
+        }
+
+        #about-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #ffd700;
+            text-decoration: none;
+            font-family: "Comic Sans MS", cursive;
+            font-size: 12px;
+            text-shadow: 1px 1px #000;
+            background: linear-gradient(to bottom, #000080, #0000ff);
+            padding: 5px 10px;
+            border: 2px outset #ffd700;
+            border-radius: 3px;
+        }
+
+        #about-link:hover {
+            border-style: inset;
+            background: linear-gradient(to bottom, #0000ff, #000080);
+        }
+
+        #about-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000080;
+            border: 3px outset #ffd700;
+            padding: 20px;
+            z-index: 1000;
+            font-family: "Comic Sans MS", cursive;
+            color: #fff;
+            text-align: center;
+            max-width: 80%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        #about-popup h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px #000;
+        }
+
+        #about-popup p {
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        #close-about {
+            background: linear-gradient(to bottom, #ffd700, #ffa500);
+            border: 2px outset #ffd700;
+            padding: 5px 15px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: "Comic Sans MS", cursive;
+            font-weight: bold;
+            color: #000080;
+        }
+
+        #close-about:hover {
+            border-style: inset;
+            background: linear-gradient(to bottom, #ffa500, #ffd700);
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <div id="loading">Wandering through the digital arcades of Geocities...</div>
@@ -10,8 +127,16 @@
         <iframe id="geocities-frame" sandbox="allow-scripts allow-same-origin"></iframe>
     </div>
     <div id="info-overlay">
-        <span id="neighborhood"></span>
-        <button id="next-city">Go to Next City</button>
+        <div id="page-info"></div>
+        <button id="next-city">Go to Next City!</button>
+    </div>
+    <a href="#" id="about-link">About</a>
+    <div id="about-popup">
+        <h2>🌟 About Geocities Archive Flâneur 🌟</h2>
+        <p>This project is made possible thanks to the amazing work of <a href="https://geocities.restorativland.org/" target="_blank" style="color: #ffd700;">Restorativland</a> who restored and preserved the Geocities sites!</p>
+        <p>Visit their website to explore more of the restored Geocities archive.</p>
+        <p class="blink">✨ Under Construction ✨</p>
+        <button id="close-about">Close</button>
     </div>
     <script src="newtab.js"></script>
 </body>
