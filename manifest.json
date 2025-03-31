@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Geocities Archive Flâneur",
   "version": "1.0",
-  "description": "Wander through the digital ruins of Geocities, discovering forgotten web treasures with each new tab. A digital flâneur's journey through the golden age of personal homepages.",
+  "description": "Wander through the digital ruins of Geocities, discovering forgotten web treasures with each new tab.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -10,8 +10,5 @@
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
-  },
-  "permissions": [
-    "storage"
-  ]
+  }
 } 

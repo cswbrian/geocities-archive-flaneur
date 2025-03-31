@@ -24,7 +24,6 @@ async function decompressGzip(response) {
                 const decompressedBlob = await new Response(decompressedStream).blob();
                 const text = await decompressedBlob.text();
                 const data = JSON.parse(text);
-                console.log('Decompressed data structure:', Object.keys(data)); // Debug log
                 resolve(data);
             } catch (error) {
                 console.error('Decompression error:', error);
@@ -38,7 +37,6 @@ async function decompressGzip(response) {
 async function loadRandomChunk() {
     try {
         const chunkNumber = Math.floor(Math.random() * CHUNK_COUNT);
-        console.log(`Loading chunk ${chunkNumber}`); // Debug log
         const response = await fetch(`data/geocities_flattened_chunk_${chunkNumber}.json.gz`);
         
         if (!response.ok) {
@@ -46,7 +44,6 @@ async function loadRandomChunk() {
         }
         
         const data = await decompressGzip(response);
-        console.log('Chunk data structure:', Object.keys(data)); // Debug log
         
         // The data structure might be different, let's check what we have
         if (!data || !Array.isArray(data)) {
@@ -90,22 +87,17 @@ async function getRandomPage() {
         const randomPage = currentChunkData[Math.floor(Math.random() * currentChunkData.length)];
         const pageUrl = `${GEOCITIES_BASE_URL}/${randomPage.url}`;
         
-        // Update the iframe src and display more information
+        // Update the iframe src
         document.getElementById('geocities-frame').src = pageUrl;
         
-        // Format the date
-        const lastModified = new Date(randomPage.last_modified).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-
-        console.log(randomPage);
-        // Update page info with all details
-        document.getElementById('page-info').innerHTML = 
-            `<div>📝 Title: ${randomPage.title}</div>
-            <div>🏘️ ${getNeighborhoodDisplay(randomPage.source)}</div>
-            <div>🔗 URL: ${randomPage.url}</div>`;
+        // Clear previous pages
+        const pagesContainer = document.getElementById('pages');
+        if (pagesContainer) {
+            pagesContainer.innerHTML = '';
+        }
+        
+        // Display the new page
+        displayPage(randomPage);
             
         document.getElementById('loading').style.display = 'none';
         
@@ -124,8 +116,22 @@ function displayPage(page) {
     title.textContent = page.title;
     pageDiv.appendChild(title);
 
-    const url = document.createElement('p');
+    const url = document.createElement('a');
+    url.href = `${GEOCITIES_BASE_URL}/${page.url}`;
+    url.target = '_blank';
     url.textContent = page.url;
+    url.style.cssText = `
+        color: #ffd700;
+        text-decoration: none;
+        font-family: "Comic Sans MS", cursive;
+        text-shadow: 1px 1px #000;
+    `;
+    url.addEventListener('mouseover', () => {
+        url.style.textDecoration = 'underline';
+    });
+    url.addEventListener('mouseout', () => {
+        url.style.textDecoration = 'none';
+    });
     pageDiv.appendChild(url);
 
     const neighborhood = document.createElement('p');
